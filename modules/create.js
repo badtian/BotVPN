@@ -82,10 +82,10 @@ async function createssh(username, password, exp, iplimit, serverId) {
 🔹 UDPGW: 7100 - 7600  
 ━━━━━━━━━━━━━━━━━━━━━
 ⚙️ Payload WS:  
-GET / HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]
+\'GET / HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]\'
 
 ⚙️ Payload WSS:  
-GET wss://BUG.COM/ HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]
+'GET wss://BUG.COM/ HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]'
 ━━━━━━━━━━━━━━━━━━━━━
 📅 Expired Until: ${s.exp}
 ━━━━━━━━━━━━━━━━━━━━━`;
@@ -164,12 +164,12 @@ async function createvmess(username, exp, quota, limitip, serverId) {
 
         const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
 ━━━━━━━━━━━━━━━━━━━━━
-🔹 User: ${s.username}
-🔹 Host: ${s.hostname}
-🔹 CITY: ${s.CITY}
-🔹 ISP: ${s.ISP}
-🔹 UUID: ${s.uuid}
-🔹 Port TLS: 443, 8443  
+🔹 User: \'${s.username}\'
+🔹 Host: \'${s.hostname}\'
+🔹 CITY: \'${s.CITY}\'
+🔹 ISP: \'${s.ISP}\'
+🔹 UUID: \'${s.uuid}\'
+🔹 Port TLS: \`443, 8443\` 
 🔹 Port NTLS: 80, 8080  
 🔹 Port Any: 2052, 2053, 8880
 🔹 Network: ws,grpc,upgrade
@@ -180,19 +180,19 @@ async function createvmess(username, exp, quota, limitip, serverId) {
 🔹 Expired: ${s.expired}
 ━━━━━━━━━━━━━━━━━━━━━
 🔗 HTTPS:  (tls)
- ${s.link.tls}
+ \'${s.link.tls}\'
 ━━━━━━━━━━━━━━━━━━━━━
 🔗 HTTP:  (non tls)
- ${s.link.none}
+ \`${s.link.none}\`
 ━━━━━━━━━━━━━━━━━━━━━
 🔗 GRPC:  
- ${s.link.grpc}
+ \'${s.link.grpc}\'
 ━━━━━━━━━━━━━━━━━━━━━
 🔗 HTTPS UPGRADE:  (up tls)
- ${s.link.uptls}
+ \'${s.link.uptls}\'
 ━━━━━━━━━━━━━━━━━━━━━
 🔗 HTTP UPGRADE:  (up non tls)
- ${s.link.upntls}
+ \`${s.link.upntls}\`
 ━━━━━━━━━━━━━━━━━━━━━`;
         
         return resolve(msg);
