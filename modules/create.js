@@ -2,11 +2,12 @@ const axios = require('axios');
 const { exec } = require('child_process');
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./sellvpn.db');
+
 async function createssh(username, password, exp, iplimit, serverId) {
   console.log(`Creating SSH account for ${username} with expiry ${exp} days, IP limit ${iplimit}, and password ${password}`);
 
   // Validasi username
-if (!/^[a-z0-9-]+$/.test(username)) {
+  if (!/^[a-z0-9-]+$/.test(username)) {
     return '❌ Username tidak valid. Mohon gunakan hanya huruf dan angka tanpa spasi.';
   }
 
@@ -49,92 +50,57 @@ if (!/^[a-z0-9-]+$/.test(username)) {
 
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
-// ======= MULAI LOGIKA UPDATE total_create_akun =======
-if (exp >= 1 && exp <= 135) {
-  db.run(
-    'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
-    [serverId],
-    (err) => {
-      if (err) {
-        console.error('⚠️ Gagal update total_create_akun:', err.message);
-      } else {
-        console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
-      }
-    }
-  );
-} else {
-  console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
-}
-// ======= SELESAI LOGIKA UPDATE =======
+        
+        // ======= MULAI LOGIKA UPDATE total_create_akun =======
+        if (exp >= 1 && exp <= 135) {
+          db.run(
+            'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
+            [serverId],
+            (err) => {
+              if (err) {
+                console.error('⚠️ Gagal update total_create_akun:', err.message);
+              } else {
+                console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
+              }
+            }
+          );
+        } else {
+          console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
+        }
+        // ======= SELESAI LOGIKA UPDATE =======
 
-        const msg = `✅ *SSH Account Created Successfully!*
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 ISP: ${s.ISP}
+🔹 Host: ${s.hostname}
+👤 Username: ${s.username}
+🔑 Password: ${s.password}
+🔹 Port WS: 80, 8080
+🔹 SSL/TLS: 443, 8443
+🔹 Squid: 3128  
+🔹 UDP Custom: 1-65535
+🔹 UDPGW: 7100 - 7600  
+━━━━━━━━━━━━━━━━━━━━━
+⚙️ Payload WS:  
+GET / HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]
 
-*🔐 SSH Premium Details*
-────────────────────────
-📡 *SSH WS*    : \`${s.hostname}:80@${s.username}:${s.password}\`
-🔒 *SSH SSL*   : \`ssl-${s.hostname}:443@${s.username}:${s.password}\`
-📶 *SSH UDP*   : \`udp-${s.hostname}:1-65535@${s.username}:${s.password}\`
-🌐 *DNS SELOW* : \`ns-${s.hostname}:5300@${s.username}:${s.password}\`
-────────────────────────
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-👤 *Username*     : \`${s.username}\`
-🔑 *Password*     : \`${s.password}\`
-🗝️ *Public Key*   : \`${s.pubkey ? s.pubkey : "-"}\`
-📅 *Expiry Date*  : \`${s.exp}\`
-⏰ *Expiry Time*  : \`${s.time}\`
-📌 *IP Limit*     : \`${LIMIT_IP}\`
-────────────────────────
-🛠 *Ports*:
-• TLS         : \`${s.port.tls}\` z
-• Non-TLS     : \`${s.port.none}\`
-• OVPN TCP    : \`${s.port.ovpntcp}\`
-• OVPN UDP    : \`${s.port.ovpnudp}\`
-• SSH OHP     : \`${s.port.sshohp}\`
-• UDP Custom  : \`${s.port.udpcustom}\`
-────────────────────────
-🧩 *Payload WS*:
-\`
-GET / HTTP/1.1
-Host: ${s.hostname}
-Connection: Upgrade
-User-Agent: [ua]
-Upgrade: websocket
-\`
-
-🧩 *Payload Enhanced*:
-\`
-PATCH / HTTP/1.1
-Host: ${s.hostname}
-Host: bug.com
-Connection: Upgrade
-User-Agent: [ua]
-Upgrade: websocket
-\`
-
-📥 *Download Config Ovpn*:
-🔗 http://${s.hostname}:81/myvpn-config.zip
-
-📥 *Download All Config UNLOCK SSH*:
-🔗 http://ssl-${s.hostname}:81/config-Indonesia.zip
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+⚙️ Payload WSS:  
+GET wss://BUG.COM/ HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]
+━━━━━━━━━━━━━━━━━━━━━
+📅 Expired Until: ${s.exp}
+━━━━━━━━━━━━━━━━━━━━━`;
+        
         return resolve(msg);
       });
     });
   });
 }
+
 async function createvmess(username, exp, quota, limitip, serverId) {
   console.log(`Creating VMess account for ${username} with expiry ${exp} days, quota ${quota} GB, IP limit ${limitip}`);
 
   // Validasi username
-if (!/^[a-z0-9-]+$/.test(username)) {
+  if (!/^[a-z0-9-]+$/.test(username)) {
     return '❌ Username tidak valid. Mohon gunakan hanya huruf dan angka tanpa spasi.';
   }
 
@@ -177,70 +143,58 @@ if (!/^[a-z0-9-]+$/.test(username)) {
 
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
-// ======= MULAI LOGIKA UPDATE total_create_akun =======
-if (exp >= 1 && exp <= 135) {
-  db.run(
-    'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
-    [serverId],
-    (err) => {
-      if (err) {
-        console.error('⚠️ Gagal update total_create_akun:', err.message);
-      } else {
-        console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
-      }
-    }
-  );
-} else {
-  console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
-}
-// ======= SELESAI LOGIKA UPDATE =======
+        
+        // ======= MULAI LOGIKA UPDATE total_create_akun =======
+        if (exp >= 1 && exp <= 135) {
+          db.run(
+            'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
+            [serverId],
+            (err) => {
+              if (err) {
+                console.error('⚠️ Gagal update total_create_akun:', err.message);
+              } else {
+                console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
+              }
+            }
+          );
+        } else {
+          console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
+        }
+        // ======= SELESAI LOGIKA UPDATE =======
 
-        const msg = `✅ *VMess Account Created Successfully!*
-
-🔐 *Akun VMess Premium*
-──────────────
-👤 *Username*     : \`${s.username}\`
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-🛡 *UUID*          : \`${s.uuid}\`
-🧾 *Expired*      : \`${s.expired}\` (${s.time})
-📦 *Quota*        : \`${KUOTA === "0" ? "Unlimited" : KUOTA} GB\`
-🔢 *IP Limit*     : \`${LIMIT_IP === "0" ? "Unlimited" : LIMIT_IP} IP\`
-──────────────
-📡 *Ports*:
-- TLS         : ${s.port.tls}
-- Non TLS     : ${s.port.none}
-- Any Port    : ${s.port.any}
-──────────────
-📶 *Path*:
-- WS          : ${s.path.stn} | ${s.path.multi}
-- gRPC        : ${s.path.grpc}
-- Upgrade     : ${s.path.up}
-──────────────
-🔗 *VMess Links*:
-- TLS         : \`${s.link.tls}\`
-──────────────
-- Non TLS     : \`${s.link.none}\`
-──────────────
-- gRPC        : \`${s.link.grpc}\`
-──────────────
-- Up TLS      : \`${s.link.uptls}\`
-──────────────
-- Up Non-TLS  : \`${s.link.upntls}\`
-──────────────
-⚙️ *Settings*:
-- AlterId     : \`0\`
-- Security    : \`auto\`
-- Network     : \`ws, grpc, upgrade\`
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
-
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 User: ${s.username}
+🔹 Host: ${s.hostname}
+🔹 CITY: ${s.CITY}
+🔹 ISP: ${s.ISP}
+🔹 UUID: ${s.uuid}
+🔹 Port TLS: 443, 8443  
+🔹 Port NTLS: 80, 8080  
+🔹 Port Any: 2052, 2053, 8880
+🔹 Network: ws,grpc,upgrade
+🔹 gRPC Path: vmess  
+🔹 WS Path: ${s.path.stn}
+🔹 Multi Path: ${s.path.multi}
+🔹 Upgrade Path: ${s.path.up}  
+🔹 Expired: ${s.expired}
+━━━━━━━━━━━━━━━━━━━━━
+🔗 HTTPS:  (tls)
+ ${s.link.tls}
+━━━━━━━━━━━━━━━━━━━━━
+🔗 HTTP:  (non tls)
+ ${s.link.none}
+━━━━━━━━━━━━━━━━━━━━━
+🔗 GRPC:  
+ ${s.link.grpc}
+━━━━━━━━━━━━━━━━━━━━━
+🔗 HTTPS UPGRADE:  (up tls)
+ ${s.link.uptls}
+━━━━━━━━━━━━━━━━━━━━━
+🔗 HTTP UPGRADE:  (up non tls)
+ ${s.link.upntls}
+━━━━━━━━━━━━━━━━━━━━━`;
+        
         return resolve(msg);
       });
     });
@@ -251,7 +205,7 @@ async function createvless(username, exp, quota, limitip, serverId) {
   console.log(`Creating VLESS account for ${username} with expiry ${exp} days, quota ${quota} GB, limit IP ${limitip}`);
 
   // Validasi username
-if (!/^[a-z0-9-]+$/.test(username)) {
+  if (!/^[a-z0-9-]+$/.test(username)) {
     return '❌ Username tidak valid. Mohon gunakan hanya huruf dan angka tanpa spasi.';
   }
 
@@ -294,23 +248,24 @@ if (!/^[a-z0-9-]+$/.test(username)) {
 
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
-// ======= MULAI LOGIKA UPDATE total_create_akun =======
-if (exp >= 1 && exp <= 135) {
-  db.run(
-    'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
-    [serverId],
-    (err) => {
-      if (err) {
-        console.error('⚠️ Gagal update total_create_akun:', err.message);
-      } else {
-        console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
-      }
-    }
-  );
-} else {
-  console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
-}
-// ======= SELESAI LOGIKA UPDATE =======
+        
+        // ======= MULAI LOGIKA UPDATE total_create_akun =======
+        if (exp >= 1 && exp <= 135) {
+          db.run(
+            'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
+            [serverId],
+            (err) => {
+              if (err) {
+                console.error('⚠️ Gagal update total_create_akun:', err.message);
+              } else {
+                console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
+              }
+            }
+          );
+        } else {
+          console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
+        }
+        // ======= SELESAI LOGIKA UPDATE =======
 
         const msg = `✅ *VLESS Account Created Successfully!*
 
@@ -362,11 +317,12 @@ if (exp >= 1 && exp <= 135) {
     });
   });
 }
+
 async function createtrojan(username, exp, quota, limitip, serverId) {
   console.log(`Creating Trojan account for ${username} with expiry ${exp} days, quota ${quota} GB, limit IP ${limitip}`);
 
   // Validasi username
-if (!/^[a-z0-9-]+$/.test(username)) {
+  if (!/^[a-z0-9-]+$/.test(username)) {
     return '❌ Username tidak valid. Mohon gunakan hanya huruf dan angka tanpa spasi.';
   }
 
@@ -409,23 +365,24 @@ if (!/^[a-z0-9-]+$/.test(username)) {
 
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
-// ======= MULAI LOGIKA UPDATE total_create_akun =======
-if (exp >= 1 && exp <= 135) {
-  db.run(
-    'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
-    [serverId],
-    (err) => {
-      if (err) {
-        console.error('⚠️ Gagal update total_create_akun:', err.message);
-      } else {
-        console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
-      }
-    }
-  );
-} else {
-  console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
-}
-// ======= SELESAI LOGIKA UPDATE =======
+        
+        // ======= MULAI LOGIKA UPDATE total_create_akun =======
+        if (exp >= 1 && exp <= 135) {
+          db.run(
+            'UPDATE Server SET total_create_akun = total_create_akun + 1 WHERE id = ?',
+            [serverId],
+            (err) => {
+              if (err) {
+                console.error('⚠️ Gagal update total_create_akun:', err.message);
+              } else {
+                console.log(`✅ total_create_akun diperbarui untuk serverId ${serverId} dengan exp ${exp}`);
+              }
+            }
+          );
+        } else {
+          console.log(`⚠️ Exp ${exp} hari tidak dicatat (kurang dari 30 atau lebih dari 135)`);
+        }
+        // ======= SELESAI LOGIKA UPDATE =======
 
         const msg = `✅ *Trojan Account Created Successfully!*
 
@@ -474,13 +431,12 @@ if (exp >= 1 && exp <= 135) {
   });
 }
 
-
 //create shadowsocks ga ada di potato
 async function createshadowsocks(username, exp, quota, limitip, serverId) {
   console.log(`Creating Shadowsocks account for ${username} with expiry ${exp} days, quota ${quota} GB, limit IP ${limitip} on server ${serverId}`);
   
   // Validasi username
-if (!/^[a-z0-9-]+$/.test(username)) {
+  if (!/^[a-z0-9-]+$/.test(username)) {
     return '❌ Username tidak valid. Mohon gunakan hanya huruf dan angka tanpa spasi.';
   }
 
@@ -520,15 +476,15 @@ if (!/^[a-z0-9-]+$/.test(username)) {
 └─────────────────────
 🔐 *URL SHADOWSOCKS TLS*
 \`\`\`
-${shadowsocksData.ss_link_ws}
+ ${shadowsocksData.ss_link_ws}
 \`\`\`
 🔒 *URL SHADOWSOCKS GRPC*
 \`\`\`
-${shadowsocksData.ss_link_grpc}
+ ${shadowsocksData.ss_link_grpc}
 \`\`\`
 🔒 *PUBKEY*
 \`\`\`
-${shadowsocksData.pubkey}
+ ${shadowsocksData.pubkey}
 \`\`\`
 ┌─────────────────────
 │ Expiry: \`${shadowsocksData.expired}\`
@@ -554,7 +510,3 @@ Save Account Link: [Save Account](https://${shadowsocksData.domain}:81/shadowsoc
 }
 
 module.exports = { createssh, createvmess, createvless, createtrojan, createshadowsocks }; 
-
-
-
-
