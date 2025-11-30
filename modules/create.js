@@ -71,23 +71,23 @@ async function createssh(username, password, exp, iplimit, serverId) {
 
         const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
 ━━━━━━━━━━━━━━━━━━━━━
-🔹 ISP: ${s.ISP}
-🔹 Host: ${s.hostname}
-👤 Username: ${s.username}
-🔑 Password: ${s.password}
-🔹 Port WS: 80, 8080
-🔹 SSL/TLS: 443, 8443
-🔹 Squid: 3128  
-🔹 UDP Custom: 1-65535
-🔹 UDPGW: 7100 - 7600  
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *Host:* \`${s.hostname}\`
+👤 *Username:* \`${s.username}\`
+🔑 *Password:* \`${s.password}\`
+🔹 *Port WS:* \`80, 8080\`
+🔹 *SSL/TLS:* \`443, 8443\`
+🔹 *Squid:* \`3128\` 
+🔹 *UDP Custom:* \`1-65535\`
+🔹 *UDPGW:* \`7100 - 7600\`  
 ━━━━━━━━━━━━━━━━━━━━━
 ⚙️ Payload WS:  
-\'GET / HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]\'
+\`GET / HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]\`
 
 ⚙️ Payload WSS:  
-'GET wss://BUG.COM/ HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]'
+\`GET wss://BUG.COM/ HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]\`
 ━━━━━━━━━━━━━━━━━━━━━
-📅 Expired Until: ${s.exp}
+📅 *Expired Until:* \`${s.exp}\`
 ━━━━━━━━━━━━━━━━━━━━━`;
         
         return resolve(msg);
@@ -164,34 +164,34 @@ async function createvmess(username, exp, quota, limitip, serverId) {
 
         const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
 ━━━━━━━━━━━━━━━━━━━━━
-🔹 User: \'${s.username}\'
-🔹 Host: \'${s.hostname}\'
-🔹 CITY: \'${s.CITY}\'
-🔹 ISP: \'${s.ISP}\'
-🔹 UUID: \'${s.uuid}\'
-🔹 Port TLS: \`443, 8443\` 
-🔹 Port NTLS: 80, 8080  
-🔹 Port Any: 2052, 2053, 8880
-🔹 Network: ws,grpc,upgrade
-🔹 gRPC Path: vmess  
-🔹 WS Path: ${s.path.stn}
-🔹 Multi Path: ${s.path.multi}
-🔹 Upgrade Path: ${s.path.up}  
-🔹 Expired: ${s.expired}
+🔹 *User:* \`${s.username}\`
+🔹 *Host:* \`${s.hostname}\`
+🔹 *CITY:* \`${s.CITY}\`
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *UUID:* \`${s.uuid}\`
+🔹 *Port TLS:* \`443\`, \`8443\` 
+🔹 *Port NTLS:* \`80\`, \`8080\`  
+🔹 *Port Any:* \`2052\`, \`2053\`, \`8880\`
+🔹 *Network:* \`ws,grpc,upgrade\`
+🔹 *gRPC Path:* \`vmess\`  
+🔹 *WS Path:* \`${s.path.stn}\`
+🔹 *Multi Path:* \`${s.path.multi}\`
+🔹 *Upgrade Path:* \`${s.path.up}\`  
+🔹 *Expired:* \`${s.expired}\`
 ━━━━━━━━━━━━━━━━━━━━━
-🔗 HTTPS:  (tls)
- \'${s.link.tls}\'
+🔗 *TLS:* 
+ \`${s.link.tls}\`
 ━━━━━━━━━━━━━━━━━━━━━
-🔗 HTTP:  (non tls)
+🔗 *NON-TLS:* 
  \`${s.link.none}\`
 ━━━━━━━━━━━━━━━━━━━━━
-🔗 GRPC:  
- \'${s.link.grpc}\'
+🔗 *GRPC:* 
+ \`${s.link.grpc}\`
 ━━━━━━━━━━━━━━━━━━━━━
-🔗 HTTPS UPGRADE:  (up tls)
- \'${s.link.uptls}\'
+🔗 *TLS UPGRADE:* 
+ \`${s.link.uptls}\`
 ━━━━━━━━━━━━━━━━━━━━━
-🔗 HTTP UPGRADE:  (up non tls)
+🔗 *NON-TLS UPGRADE:* 
  \`${s.link.upntls}\`
 ━━━━━━━━━━━━━━━━━━━━━`;
         
@@ -267,50 +267,38 @@ async function createvless(username, exp, quota, limitip, serverId) {
         }
         // ======= SELESAI LOGIKA UPDATE =======
 
-        const msg = `✅ *VLESS Account Created Successfully!*
-
-🔐 *Akun VLESS Premium*
-──────────────
-👤 *Username*     : \`${s.username}\`
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-🛡 *UUID*         : \`${s.uuid}\`
-📅 *Expired*      : \`${s.expired}\` (${s.time})
-📦 *Quota*        : \`${KUOTA === "0" ? "Unlimited" : KUOTA} GB\`
-🔢 *IP Limit*     : \`${LIMIT_IP === "0" ? "Unlimited" : LIMIT_IP} IP\`
-──────────────
-📡 *Ports*:
-- TLS         : ${s.port.tls}
-- Non TLS     : ${s.port.none}
-- Any Port    : ${s.port.any}
-──────────────
-📶 *Path*:
-- WS          : ${s.path.stn} | ${s.path.multi}
-- gRPC        : ${s.path.grpc}
-- Upgrade     : ${s.path.up}
-──────────────
-🔗 *VLESS Links*:
-- TLS         : \`${s.link.tls}\`
-──────────────
-- Non TLS     : \`${s.link.none}\`
-──────────────
-- gRPC        : \`${s.link.grpc}\`
-──────────────
-- Up TLS      : \`${s.link.uptls}\`
-──────────────
-- Up Non-TLS  : \`${s.link.upntls}\`
-──────────────
-⚙️ *Settings*:
-- Security    : \`auto\`
-- Network     : \`ws, grpc, upgrade\`
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *User:* \`${s.username}\`
+🔹 *Host:* \`${s.hostname}\`
+🔹 *CITY:* \`${s.CITY}\`
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *UUID:* \`${s.uuid}\`
+🔹 *Port TLS:* \`443\`, \`8443\` 
+🔹 *Port NTLS:* \`80\`, \`8080\`  
+🔹 *Port Any:* \`2052\`, \`2053\`, \`8880\`
+🔹 *Network:* \`ws,grpc,upgrade\`
+🔹 *gRPC Path:* \`vmess\`  
+🔹 *WS Path:* \`${s.path.stn}\`
+🔹 *Multi Path:* \`${s.path.multi}\`
+🔹 *Upgrade Path:* \`${s.path.up}\`  
+🔹 *Expired:* \`${s.expired}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS:* 
+ \`${s.link.tls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS:* 
+ \`${s.link.none}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *GRPC:* 
+ \`${s.link.grpc}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS UPGRADE:* 
+ \`${s.link.uptls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS UPGRADE:* 
+ \`${s.link.upntls}\`
+━━━━━━━━━━━━━━━━━━━━━`;
 
         return resolve(msg);
       });
@@ -384,46 +372,32 @@ async function createtrojan(username, exp, quota, limitip, serverId) {
         }
         // ======= SELESAI LOGIKA UPDATE =======
 
-        const msg = `✅ *Trojan Account Created Successfully!*
-
-🔐 *Akun TROJAN Premium*
-──────────────
-👤 *Username*     : \`${s.username}\`
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-🔑 *Key*          : \`${s.uuid}\`
-📅 *Expired*      : \`${s.expired}\` (${s.time})
-📦 *Quota*        : \`${KUOTA === "0" ? "Unlimited" : KUOTA} GB\`
-🔢 *IP Limit*     : \`${LIMIT_IP === "0" ? "Unlimited" : LIMIT_IP} IP\`
-──────────────
-📡 *Ports*:
-- TLS         : ${s.port.tls}
-- Non TLS     : ${s.port.none}
-- Any Port    : ${s.port.any}
-──────────────
-📶 *Path*:
-- WS          : ${s.path.stn} | ${s.path.multi}
-- gRPC        : ${s.path.grpc}
-- Upgrade     : ${s.path.up}
-──────────────
-🔗 *Trojan Links*:
-- TLS         : \`${s.link.tls}\`
-──────────────
-- gRPC        : \`${s.link.grpc}\`
-──────────────
-- Up TLS      : \`${s.link.uptls}\`
-──────────────
-⚙️ *Settings*:
-- Security    : \`auto\`
-- Network     : \`ws, grpc, upgrade\`
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *User:* \`${s.username}\`
+🔹 *Host:* \`${s.hostname}\`
+🔹 *CITY:* \`${s.CITY}\`
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *UUID:* \`${s.uuid}\`
+🔹 *Port TLS:* \`443\`, \`8443\` 
+🔹 *Port NTLS:* \`80\`, \`8080\`  
+🔹 *Port Any:* \`2052\`, \`2053\`, \`8880\`
+🔹 *Network:* \`ws,grpc,upgrade\`
+🔹 *gRPC Path:* \`vmess\`  
+🔹 *WS Path:* \`${s.path.stn}\`
+🔹 *Multi Path:* \`${s.path.multi}\`
+🔹 *Upgrade Path:* \`${s.path.up}\`  
+🔹 *Expired:* \`${s.expired}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS:* 
+ \`${s.link.tls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *GRPC:* 
+ \`${s.link.grpc}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS UPGRADE:* 
+ \`${s.link.uptls}\`
+━━━━━━━━━━━━━━━━━━━━━`;
 
         return resolve(msg);
       });
