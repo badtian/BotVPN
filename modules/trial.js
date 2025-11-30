@@ -50,65 +50,26 @@ if (!/^[a-z0-9-]+$/.test(username)) {
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
 
-        const msg = `✅ *SSH Account Created Successfully!*
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *Host:* \`${s.hostname}\`
+👤 *Username:* \`${s.username}\`
+🔑 *Password:* \`${s.password}\`
+🔹 *Port WS:* \`80, 8080\`
+🔹 *SSL/TLS:* \`443, 8443\`
+🔹 *Squid:* \`3128\` 
+🔹 *UDP Custom:* \`1-65535\`
+🔹 *UDPGW:* \`7100 - 7600\`  
+━━━━━━━━━━━━━━━━━━━━━
+⚙️ Payload WS:  
+\`GET / HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]\`
 
-*🔐 SSH Premium Details*
-────────────────────────
-📡 *SSH WS*       : \`${s.hostname}:80@${s.username}:${s.password}\`
-🔒 *SSH SSL*      : \`ssl-${s.hostname}:443@${s.username}:${s.password}\`
-📶 *SSH UDP*      : \`udp-${s.hostname}:1-65535@${s.username}:${s.password}\`
-🌐 *DNS SELOW*    : \`ns-${s.hostname}:5300@${s.username}:${s.password}\`
-────────────────────────
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-👤 *Username*     : \`${s.username}\`
-🔑 *Password*     : \`${s.password}\`
-🗝️ *Public Key*  : \`${s.pubkey ? s.pubkey : "-"}\`
-📅 *Expiry Date*  : \`${s.exp}\`
-⏰ *Expiry Time*  : \`${s.time}\`
-📌 *IP Limit*     : \`${LIMIT_IP}\`
-────────────────────────
-🛠 *Ports*:
-• TLS         : \`${s.port.tls}\`
-• Non-TLS     : \`${s.port.none}\`
-• OVPN TCP    : \`${s.port.ovpntcp}\`
-• OVPN UDP    : \`${s.port.ovpnudp}\`
-• SSH OHP     : \`${s.port.sshohp}\`
-• UDP Custom  : \`${s.port.udpcustom}\`
-────────────────────────
-🧩 *Payload WS*:
-\`
-GET / HTTP/1.1
-Host: ${s.hostname}
-Connection: Upgrade
-User-Agent: [ua]
-Upgrade: websocket
-\`
-
-🧩 *Payload Enhanced*:
-\`
-PATCH / HTTP/1.1
-Host: ${s.hostname}
-Host: bug.com
-Connection: Upgrade
-User-Agent: [ua]
-Upgrade: websocket
-\`
-
-
-📥 *Download Config Ovpn*:
-🔗 http://${s.hostname}:81/myvpn-config.zip
-
-📥 *Download All Config UNLOCK SSH*:
-🔗 http://ssl-${s.hostname}:81/config-Indonesia.zip
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+⚙️ Payload WSS:  
+\`GET wss://BUG.COM/ HTTP/1.1[crlf]Host: ${s.hostname}[crlf]Connection: Keep-Alive[crlf]User-Agent: [ua][crlf]Upgrade: websocket[crlf][crlf]\`
+━━━━━━━━━━━━━━━━━━━━━
+📅 *Expired Until:* \`${s.exp}\`
+━━━━━━━━━━━━━━━━━━━━━`;
         return resolve(msg);
       });
     });
@@ -162,51 +123,38 @@ if (!/^[a-z0-9-]+$/.test(username)) {
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
 
-        const msg = `✅ *VMess Account Created Successfully!*
-
-🔐 *Akun VMess Premium*
-──────────────
-👤 *Username*     : \`${s.username}\`
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-🛡 *UUID*         : \`${s.uuid}\`
-🧾 *Expired*      : \`${s.expired}\` (${s.time})
-📦 *Quota*        : \`${KUOTA === "0" ? "Unlimited" : KUOTA} GB\`
-🔢 *IP Limit*     : \`${LIMIT_IP === "0" ? "Unlimited" : LIMIT_IP} IP\`
-──────────────
-📡 *Ports*:
-- TLS         : ${s.port.tls}
-- Non TLS     : ${s.port.none}
-- Any Port    : ${s.port.any}
-──────────────
-📶 *Path*:
-- WS          : ${s.path.stn} | ${s.path.multi}
-- gRPC        : ${s.path.grpc}
-- Upgrade     : ${s.path.up}
-──────────────
-🔗 *VMess Links*:
-- TLS         : \`${s.link.tls}\`
-──────────────
-- Non TLS     : \`${s.link.none}\`
-──────────────
-- gRPC        : \`${s.link.grpc}\`
-──────────────
-- Up TLS      : \`${s.link.uptls}\`
-──────────────
-- Up Non-TLS  : \`${s.link.upntls}\`
-──────────────
-⚙️ *Settings*:
-- AlterId     : \`0\`
-- Security    : \`auto\`
-- Network     : \`ws, grpc, upgrade\`
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *User:* \`${s.username}\`
+🔹 *Host:* \`${s.hostname}\`
+🔹 *CITY:* \`${s.CITY}\`
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *UUID:* \`${s.uuid}\`
+🔹 *Port TLS:* \`443\`, \`8443\` 
+🔹 *Port NTLS:* \`80\`, \`8080\`  
+🔹 *Port Any:* \`2052\`, \`2053\`, \`8880\`
+🔹 *Network:* \`ws,grpc,upgrade\`
+🔹 *gRPC Path:* \`vmess\`  
+🔹 *WS Path:* \`${s.path.stn}\`
+🔹 *Multi Path:* \`${s.path.multi}\`
+🔹 *Upgrade Path:* \`${s.path.up}\`  
+🔹 *Expired:* \`${s.expired}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS:* 
+ \`${s.link.tls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS:* 
+ \`${s.link.none}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *GRPC:* 
+ \`${s.link.grpc}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS UPGRADE:* 
+ \`${s.link.uptls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS UPGRADE:* 
+ \`${s.link.upntls}\`
+━━━━━━━━━━━━━━━━━━━━━`;
 
         return resolve(msg);
       });
@@ -262,50 +210,38 @@ if (!/^[a-z0-9-]+$/.test(username)) {
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
 
-        const msg = `✅ *VLESS Account Created Successfully!*
-
-🔐 *Akun VLESS Premium*
-──────────────
-👤 *Username*     : \`${s.username}\`
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-🛡 *UUID*         : \`${s.uuid}\`
-📅 *Expired*      : \`${s.expired}\` (${s.time})
-📦 *Quota*        : \`${KUOTA === "0" ? "Unlimited" : KUOTA} GB\`
-🔢 *IP Limit*     : \`${LIMIT_IP === "0" ? "Unlimited" : LIMIT_IP} IP\`
-──────────────
-📡 *Ports*:
-- TLS         : ${s.port.tls}
-- Non TLS     : ${s.port.none}
-- Any Port    : ${s.port.any}
-──────────────
-📶 *Path*:
-- WS          : ${s.path.stn} | ${s.path.multi}
-- gRPC        : ${s.path.grpc}
-- Upgrade     : ${s.path.up}
-──────────────
-🔗 *VLESS Links*:
-- TLS         : \`${s.link.tls}\`
-──────────────
-- Non TLS     : \`${s.link.none}\`
-──────────────
-- gRPC        : \`${s.link.grpc}\`
-──────────────
-- Up TLS      : \`${s.link.uptls}\`
-──────────────
-- Up Non-TLS  : \`${s.link.upntls}\`
-──────────────
-⚙️ *Settings*:
-- Security    : \`auto\`
-- Network     : \`ws, grpc, upgrade\`
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *User:* \`${s.username}\`
+🔹 *Host:* \`${s.hostname}\`
+🔹 *CITY:* \`${s.CITY}\`
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *UUID:* \`${s.uuid}\`
+🔹 *Port TLS:* \`443\`, \`8443\` 
+🔹 *Port NTLS:* \`80\`, \`8080\`  
+🔹 *Port Any:* \`2052\`, \`2053\`, \`8880\`
+🔹 *Network:* \`ws,grpc,upgrade\`
+🔹 *gRPC Path:* \`vmess\`  
+🔹 *WS Path:* \`${s.path.stn}\`
+🔹 *Multi Path:* \`${s.path.multi}\`
+🔹 *Upgrade Path:* \`${s.path.up}\`  
+🔹 *Expired:* \`${s.expired}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS:* 
+ \`${s.link.tls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS:* 
+ \`${s.link.none}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *GRPC:* 
+ \`${s.link.grpc}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS UPGRADE:* 
+ \`${s.link.uptls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS UPGRADE:* 
+ \`${s.link.upntls}\`
+━━━━━━━━━━━━━━━━━━━━━`;
 
         return resolve(msg);
       });
@@ -360,46 +296,38 @@ if (!/^[a-z0-9-]+$/.test(username)) {
         const s = d.data;
         console.log("⚠️ FULL DATA:", JSON.stringify(d, null, 2));
 
-        const msg = `✅ *Trojan Account Created Successfully!*
-
-🔐 *Akun TROJAN Premium*
-──────────────
-👤 *Username*     : \`${s.username}\`
-🌍 *Host*         : \`${s.hostname}\`
-🏢 *ISP*          : \`${s.ISP}\`
-🏙️ *City*         : \`${s.CITY}\`
-🔑 *Key*          : \`${s.uuid}\`
-📅 *Expired*      : \`${s.expired}\` (${s.time})
-📦 *Quota*        : \`${KUOTA === "0" ? "Unlimited" : KUOTA} GB\`
-🔢 *IP Limit*     : \`${LIMIT_IP === "0" ? "Unlimited" : LIMIT_IP} IP\`
-──────────────
-📡 *Ports*:
-- TLS         : ${s.port.tls}
-- Non TLS     : ${s.port.none}
-- Any Port    : ${s.port.any}
-──────────────
-📶 *Path*:
-- WS          : ${s.path.stn} | ${s.path.multi}
-- gRPC        : ${s.path.grpc}
-- Upgrade     : ${s.path.up}
-──────────────
-🔗 *Trojan Links*:
-- TLS         : \`${s.link.tls}\`
-──────────────
-- gRPC        : \`${s.link.grpc}\`
-──────────────
-- Up TLS      : \`${s.link.uptls}\`
-──────────────
-⚙️ *Settings*:
-- Security    : \`auto\`
-- Network     : \`ws, grpc, upgrade\`
-
-📥 *GRUP TESTIMOINI & BERBAGI BUG*:
-🔗 http://t.me/RAJA\\_VPN\\_STORE
-
-*© Telegram Bots - 2025*
-✨ Terima kasih telah menggunakan layanan kami!
-`;
+        const msg = `𝘼𝘾𝘾𝙊𝙐𝙉𝙏 𝘾𝙍𝙀𝘼𝙏𝙀𝘿
+━━━━━━━━━━━━━━━━━━━━━
+🔹 *User:* \`${s.username}\`
+🔹 *Host:* \`${s.hostname}\`
+🔹 *CITY:* \`${s.CITY}\`
+🔹 *ISP:* \`${s.ISP}\`
+🔹 *UUID:* \`${s.uuid}\`
+🔹 *Port TLS:* \`443\`, \`8443\` 
+🔹 *Port NTLS:* \`80\`, \`8080\`  
+🔹 *Port Any:* \`2052\`, \`2053\`, \`8880\`
+🔹 *Network:* \`ws,grpc,upgrade\`
+🔹 *gRPC Path:* \`vmess\`  
+🔹 *WS Path:* \`${s.path.stn}\`
+🔹 *Multi Path:* \`${s.path.multi}\`
+🔹 *Upgrade Path:* \`${s.path.up}\`  
+🔹 *Expired:* \`${s.expired}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS:* 
+ \`${s.link.tls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS:* 
+ \`${s.link.none}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *GRPC:* 
+ \`${s.link.grpc}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *TLS UPGRADE:* 
+ \`${s.link.uptls}\`
+━━━━━━━━━━━━━━━━━━━━━
+🔗 *NON-TLS UPGRADE:* 
+ \`${s.link.upntls}\`
+━━━━━━━━━━━━━━━━━━━━━`;
 
         return resolve(msg);
       });
