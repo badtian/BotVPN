@@ -2,15 +2,8 @@
 
 # Daftar server (ubah sesuai kebutuhan)
 servers=(
-  "sgvip.rajaserverpremium.web.id"
-  "sgvvip.rajaserverpremium.web.id"
-  "sgvvip2.rajaserverpremium.web.id"
-  "sgvvip3.rajaserverpremium.web.id"
-  "sgteam1.rajaserverpremium.web.id"
-  "sgteam2.rajaserverpremium.web.id"
-  "idnusa.rajaserverpremium.web.id"
-  "idnusa2.rajaserverpremium.web.id"
-  "idnusastb.rajaserverpremium.web.id"
+  "id-idc.jayxstore.tech"
+  "sg-ls.jayxstore.tech"
 )
 
 # Hanya cek port 80 dan 443
