@@ -153,7 +153,7 @@ const vars = JSON.parse(fs.readFileSync('./.vars.json', 'utf8'));
 const BOT_TOKEN = vars.BOT_TOKEN;
 const port = vars.PORT || 6969;
 const ADMIN = vars.USER_ID; 
-const NAMA_STORE = vars.NAMA_STORE || '@ARI_VPN_STORE';
+const NAMA_STORE = vars.NAMA_STORE || '@jaehyunxtc';
 const DATA_QRIS = vars.DATA_QRIS;
 const MERCHANT_ID = vars.MERCHANT_ID;
 const API_KEY = vars.API_KEY;
@@ -397,26 +397,24 @@ const statusReseller = isReseller ? 'Reseller' : 'Member';
   const latency = (Math.random() * 0.1 + 0.01).toFixed(2);
 
   const messageText = `<b>✨ Welcome to ${NAMA_STORE} VPN! ✨</b>
-<i>🚀 Your Premium Gateway to Fast & Secure Internet!</i>
 
-Hey, <b>${userName}</b>! 👋
+ℹ️ <b>Informasi Akun:</b>
+📖 <b>Nama:</b> ${userName}
+💰 <b>Balance:</b> <code>Rp ${saldo}</code>
+🎖️ <b>Role:</b> <code>${statusReseller}</code>
+🆔 <b>ID:</b> <code>${userId}</code>
 
-💳 <b>Your Account:</b>
-   • Balance: <code>Rp ${saldo}</code>
-   • Role: <code>${statusReseller}</code>
+📊 <b>Statistik Anda:</b>
+🔹 Today: <code>${userToday}</code> new accounts
+🔹 This Week: <code>${userWeek}</code> accounts
+🔹 This Month: <code>${userMonth}</code> accounts
 
-📊 <b>Your Stats:</b>
-   🔹 Today: <code>${userToday}</code> new accounts
-   🔹 This Week: <code>${userWeek}</code> accounts
-   🔹 This Month: <code>${userMonth}</code> accounts
-
-🌍 <b>Global Stats:</b>
-   🔹 Today: <code>${globalToday}</code> accounts
-   🔹 This Week: <code>${globalWeek}</code> accounts
-   🔹 This Month: <code>${globalMonth}</code> accounts
+🌍 <b>Statistik Global:</b>
+🔹 Today: <code>${globalToday}</code> accounts
+🔹 This Week: <code>${globalWeek}</code> accounts
+🔹 This Month: <code>${globalMonth}</code> accounts
 
 ━━━━━━━━━━━━━━━━
-🤖 <b>Your ID:</b> <code>${userId}</code>
 👥 <b>Total Users:</b> <code>${jumlahPengguna}</code>
 ⚡ <b>Latency:</b> <code>${latency} ms</code>`;
 
@@ -430,8 +428,7 @@ if (isReseller) {
       { text: '♻️ Perpanjang Akun', callback_data: 'service_renew' }
     ],
     [
-      { text: '❌ Hapus Akun', callback_data: 'service_del' },
-      { text: '📶 Cek Server', callback_data: 'cek_service' }
+      { text: '❌ Hapus Akun', callback_data: 'service_del' }
     ],
     [
       { text: '🗝️ Kunci Akun', callback_data: 'service_lock' },
@@ -457,7 +454,7 @@ if (isReseller) {
       { text: '💰 TopUp Saldo', callback_data: 'topup_saldo' },
     ],
     [
-      { text: '🤝 Jadi Reseller & Dapat Harga Spesial', callback_data: 'jadi_reseller' }
+      { text: 'Tembak Paket', url: 'https://t.me/panel_jaybot'}
     ]
   ];
 }
@@ -535,6 +532,7 @@ const helpMessage = `
 14. /edittotalcreate - Mengedit total pembuatan akun server.
 15. /hapuslog - Menghapus log bot.
 16. /backup - Menjalankan backup otomatis.
+17. /minsaldo - Mengurangi saldo dari akun pengguna.
 
 Gunakan perintah ini dengan format yang benar untuk menghindari kesalahan.
 `;
@@ -732,6 +730,68 @@ bot.command('addsaldo', async (ctx) => {
           }
 
           ctx.reply(`✅ Saldo sebesar \`${amount}\` berhasil ditambahkan untuk \`user_id\` \`${targetUserId}\`.`, { parse_mode: 'Markdown' });
+      });
+  });
+});
+
+bot.command('minsaldo', async (ctx) => {
+  const userId = ctx.message.from.id;
+  if (!adminIds.includes(userId)) {
+      return ctx.reply('⚠️ Anda tidak memiliki izin untuk menggunakan perintah ini.', { parse_mode: 'Markdown' });
+  }
+
+  const args = ctx.message.text.split(' ');
+  if (args.length !== 3) {
+      return ctx.reply('⚠️ Format salah. Gunakan: `/minsaldo <user_id> <jumlah>`', { parse_mode: 'Markdown' });
+  }
+
+  const targetUserId = parseInt(args[1]);
+  const amount = parseInt(args[2]);
+
+  if (isNaN(targetUserId) || isNaN(amount)) {
+      return ctx.reply('⚠️ `user_id` dan `jumlah` harus berupa angka.', { parse_mode: 'Markdown' });
+  }
+
+  if (/\s/.test(args[1]) || /\./.test(args[1]) || /\s/.test(args[2]) || /\./.test(args[2])) {
+      return ctx.reply('⚠️ `user_id` dan `jumlah` tidak boleh mengandung spasi atau titik.', { parse_mode: 'Markdown' });
+  }
+
+  db.get("SELECT * FROM users WHERE user_id = ?", [targetUserId], (err, row) => {
+      if (err) {
+          logger.error('⚠️ Kesalahan saat memeriksa `user_id`:', err.message);
+          return ctx.reply('⚠️ Kesalahan saat memeriksa `user_id`.', { parse_mode: 'Markdown' });
+      }
+
+      if (!row) {
+          return ctx.reply('⚠️ `user_id` tidak terdaftar.', { parse_mode: 'Markdown' });
+      }
+
+      // Periksa apakah saldo mencukupi
+      if (row.saldo < amount) {
+          return ctx.reply(`⚠️ Saldo user tidak mencukupi. Saldo saat ini: Rp ${row.saldo}`, { parse_mode: 'Markdown' });
+      }
+
+      // Kurangi saldo
+      db.run("UPDATE users SET saldo = saldo - ? WHERE user_id = ?", [amount, targetUserId], function(err) {
+          if (err) {
+              logger.error('⚠️ Kesalahan saat mengurangi saldo:', err.message);
+              return ctx.reply('⚠️ Kesalahan saat mengurangi saldo.', { parse_mode: 'Markdown' });
+          }
+
+          if (this.changes === 0) {
+              return ctx.reply('⚠️ Pengguna tidak ditemukan.', { parse_mode: 'Markdown' });
+          }
+
+          // Dapatkan saldo terbaru
+          db.get("SELECT saldo FROM users WHERE user_id = ?", [targetUserId], (err, updatedRow) => {
+              if (err) {
+                  logger.error('⚠️ Kesalahan saat mengambil saldo terbaru:', err.message);
+                  return ctx.reply(`✅ Saldo sebesar \`${amount}\` berhasil dikurangi dari \`user_id\` \`${targetUserId}\`.`, { parse_mode: 'Markdown' });
+              }
+              
+              const newSaldo = updatedRow ? updatedRow.saldo : 0;
+              ctx.reply(`✅ Saldo sebesar \`${amount}\` berhasil dikurangi dari \`user_id\` \`${targetUserId}\`.\n💰 Saldo terbaru: Rp ${newSaldo}`, { parse_mode: 'Markdown' });
+          });
       });
   });
 });
@@ -1036,49 +1096,49 @@ async function handleServiceAction(ctx, action) {
   let keyboard;
   if (action === 'create') {
     keyboard = [
-      [{ text: 'Buat Ssh/Ovpn', callback_data: 'create_ssh' }],      
+      [{ text: 'Buat SSH', callback_data: 'create_ssh' }],      
       [{ text: 'Buat Vmess', callback_data: 'create_vmess' }, { text: 'Buat Vless', callback_data: 'create_vless' }],
       [{ text: 'Buat Trojan', callback_data: 'create_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }]
     ];
   } else if (action === 'trial') {
     keyboard = [
-      [{ text: 'Trial Ssh/Ovpn', callback_data: 'trial_ssh' }],      
+      [{ text: 'Trial SSH', callback_data: 'trial_ssh' }],      
       [{ text: 'Trial Vmess', callback_data: 'trial_vmess' }, { text: 'Trial Vless', callback_data: 'trial_vless' }],
       [{ text: 'Trial Trojan', callback_data: 'trial_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
   } else if (action === 'renew') {
     keyboard = [
-      [{ text: 'Perpanjang Ssh/Ovpn', callback_data: 'renew_ssh' }],      
+      [{ text: 'Perpanjang SSH', callback_data: 'renew_ssh' }],      
       [{ text: 'Perpanjang Vmess', callback_data: 'renew_vmess' }, { text: 'Perpanjang Vless', callback_data: 'renew_vless' }],
       [{ text: 'Perpanjang Trojan', callback_data: 'renew_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
   } else if (action === 'del') {
     keyboard = [
-      [{ text: 'Hapus Ssh/Ovpn', callback_data: 'del_ssh' }],      
+      [{ text: 'Hapus SSH', callback_data: 'del_ssh' }],      
       [{ text: 'Hapus Vmess', callback_data: 'del_vmess' }, { text: 'Hapus Vless', callback_data: 'del_vless' }],
       [{ text: 'Hapus Trojan', callback_data: 'del_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
   } else if (action === 'lock') {
     keyboard = [
-      [{ text: 'Lock Ssh/Ovpn', callback_data: 'lock_ssh' }],      
+      [{ text: 'Lock SSH', callback_data: 'lock_ssh' }],      
       [{ text: 'Lock Vmess', callback_data: 'lock_vmess' }, { text: 'Lock Vless', callback_data: 'lock_vless' }],
       [{ text: 'Lock Trojan', callback_data: 'lock_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
   } else if (action === 'unlock') {
     keyboard = [
-      [{ text: 'Unlock Ssh/Ovpn', callback_data: 'unlock_ssh' }],      
+      [{ text: 'Unlock SSH', callback_data: 'unlock_ssh' }],      
       [{ text: 'Unlock Vmess', callback_data: 'unlock_vmess' }, { text: 'Unlock Vless', callback_data: 'unlock_vless' }],
       [{ text: 'Unlock Trojan', callback_data: 'unlock_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
   } else if (action === 'changelimip') {
     keyboard = [
-      [{ text: 'Change Limit Ssh/Ovpn', callback_data: 'changelimip_ssh' }],      
+      [{ text: 'Change Limit SSH', callback_data: 'changelimip_ssh' }],      
       [{ text: 'Change Limit Vmess', callback_data: 'changelimip_vmess' }, { text: 'Change Limit Vless', callback_data: 'changelimip_vless' }],
       [{ text: 'Change Limit Trojan', callback_data: 'changelimip_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
   } else if (action === 'checkconfig') {
     keyboard = [
-      [{ text: 'Check Config Ssh/Ovpn', callback_data: 'checkconfig_ssh' }],      
+      [{ text: 'Check Config SSH', callback_data: 'checkconfig_ssh' }],      
       [{ text: 'Check Config Vmess', callback_data: 'checkconfig_vmess' }, { text: 'Check Config Vless', callback_data: 'checkconfig_vless' }],
       [{ text: 'Check Config Trojan', callback_data: 'checkconfig_trojan' }, { text: '🔙 Kembali', callback_data: 'send_main_menu' }],
     ];
@@ -1880,7 +1940,6 @@ await bot.telegram.sendMessage(
 🧾 <b>Type:</b> ${type.toUpperCase()}
 📛 <b>Username:</b> ${maskedUsername}
 📆 <b>Expired:</b> ${exp1 || '-'}
-💾 <b>Quota:</b> ${quota1 || '-'}
 🌐 <b>Server ID:</b> ${serverId}
 ━━━━━━━━━━━━━━━━━━━━
 </blockquote>`,
@@ -2394,7 +2453,6 @@ await bot.telegram.sendMessage(
 🧾 <b>Type:</b> ${type.toUpperCase()}
 📛 <b>Username:</b> ${maskedUsername}
 📆 <b>Expired:</b> ${exp || '0'}
-💾 <b>Quota:</b> ${quota || '0'}
 🌐 <b>Server ID:</b> ${serverId}
 ━━━━━━━━━━━━━━━━━━━━
 </blockquote>`,
