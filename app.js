@@ -1311,7 +1311,7 @@ bot.action('jadi_reseller', async (ctx) => {
 
   await ctx.reply(
     `📩 Hubungi admin ${ADMIN_USERNAME} untuk menjadi Reseller.\n\n` +
-    `💰 <b>Minimal deposit:</b> Rp100,000\n\n` +
+    `💰 <b>Minimal deposit:</b> Rp50,000\n\n` +
     `Kirim pesan ke admin dengan format:\n` +
     `<code>Mau jadi reseller ${userId}</code>`,
     { parse_mode: 'HTML' }
