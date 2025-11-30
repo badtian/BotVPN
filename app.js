@@ -385,7 +385,7 @@ if (fs.existsSync(resselFilePath)) {
   const resellerList = fs.readFileSync(resselFilePath, 'utf8').split('\n').map(x => x.trim());
   isReseller = resellerList.includes(userId.toString());
 }
-const statusReseller = isReseller ? 'Reseller' : 'Bukan Reseller';
+const statusReseller = isReseller ? 'Reseller' : 'Member';
   try {
     const row = await new Promise((resolve, reject) => {
       db.get('SELECT COUNT(*) AS count FROM users', (err, row) => { if (err) reject(err); else resolve(row); });
@@ -396,39 +396,29 @@ const statusReseller = isReseller ? 'Reseller' : 'Bukan Reseller';
   // Latency (dummy, bisa diubah sesuai kebutuhan)
   const latency = (Math.random() * 0.1 + 0.01).toFixed(2);
 
-  const messageText = `
-╭─ <b>⚡ BOT VPN ${NAMA_STORE} ⚡</b>
-├ Bot VPN Premium dengan sistem otomatis
-├ Pembelian layanan VPN berkualitas tinggi
-└ Akses internet cepat & aman dengan server terpercaya! 
+  const messageText = `<b>✨ Welcome to ${NAMA_STORE} VPN! ✨</b>
+<i>🚀 Your Premium Gateway to Fast & Secure Internet!</i>
 
-<b>👋 Hai, Member <code>${userName}</code>!</b>
-ID: <code>${userId}</code>
-Saldo: <code>Rp ${saldo}</code>
-Status: <code>${statusReseller}</code>
+Hey, <b>${userName}</b>! 👋
 
-<blockquote>📊 <b>Statistik Anda</b>
-• Hari Ini    : ${userToday} akun
-• Minggu Ini  : ${userWeek} akun
-• Bulan Ini   : ${userMonth} akun
+💳 <b>Your Account:</b>
+   • Balance: <code>Rp ${saldo}</code>
+   • Role: <code>${statusReseller}</code>
 
-🌐 <b>Statistik Global</b>
-• Hari Ini    : ${globalToday} akun
-• Minggu Ini  : ${globalWeek} akun
-• Bulan Ini   : ${globalMonth} akun
-</blockquote>
+📊 <b>Your Stats:</b>
+   🔹 Today: <code>${userToday}</code> new accounts
+   🔹 This Week: <code>${userWeek}</code> accounts
+   🔹 This Month: <code>${userMonth}</code> accounts
 
-⚙️ <b>COMMAND</b>
-• 🏠 Menu Utama   : /start
-• 🔑 Menu Admin   : /admin
-• 🛡️ Admin Panel  : /helpadmin
+🌍 <b>Global Stats:</b>
+   🔹 Today: <code>${globalToday}</code> accounts
+   🔹 This Week: <code>${globalWeek}</code> accounts
+   🔹 This Month: <code>${globalMonth}</code> accounts
 
-👨‍💻 <b>Pembuat:</b> @ARI_VPN_STORE
-🛠️ <b>Credit:</b> ARI STORE × API POTATO
-🔧 <b>Base:</b> FighterTunnel
-👥 <b>Pengguna BOT:</b> ${jumlahPengguna}
-⏱️ <b>Latency:</b> ${latency} ms
-──────────────────────────`;
+━━━━━━━━━━━━━━━━
+🤖 <b>Your ID:</b> <code>${userId}</code>
+👥 <b>Total Users:</b> <code>${jumlahPengguna}</code>
+⚡ <b>Latency:</b> <code>${latency} ms</code>`;
 
 let keyboard;
 
@@ -448,7 +438,6 @@ if (isReseller) {
       { text: '🔐 Buka Kunci Akun', callback_data: 'service_unlock' }
     ],
     [
-      { text: '🔀 Change Limit IP', callback_data: 'service_changelimip' },
       { text: '📝 Check Config Akun', callback_data: 'service_checkconfig' }
     ],
     [
@@ -1887,7 +1876,7 @@ await bot.telegram.sendMessage(
   `<blockquote>
 ⌛ <b>Trial Account Created</b>
 ━━━━━━━━━━━━━━━━━━━━
-👤 <b>User:</b> ${ctx.from.first_name} (${ctx.from.id})
+👤 <b>User:</b> ${ctx.from.first_name}
 🧾 <b>Type:</b> ${type.toUpperCase()}
 📛 <b>Username:</b> ${maskedUsername}
 📆 <b>Expired:</b> ${exp1 || '-'}
@@ -2401,7 +2390,7 @@ await bot.telegram.sendMessage(
   `<blockquote>
 📢 <b>Account Created</b>
 ━━━━━━━━━━━━━━━━━━━━
-👤 <b>User:</b> ${ctx.from.first_name} (${ctx.from.id})
+👤 <b>User:</b> ${ctx.from.first_name}
 🧾 <b>Type:</b> ${type.toUpperCase()}
 📛 <b>Username:</b> ${maskedUsername}
 📆 <b>Expired:</b> ${exp || '0'}
@@ -3622,8 +3611,8 @@ bot.on('callback_query', async (ctx) => {
 async function handleDepositState(ctx, userId, data) {
   // Cek apakah user reseller
   const isReseller = await isUserReseller(userId);
-  const statusReseller = isReseller ? 'Reseller' : 'Bukan Reseller';
-  const minDeposit = isReseller ? 100000 : 1000; // 100k untuk reseller, 1k untuk user biasa
+  const statusReseller = isReseller ? 'Reseller' : 'Member';
+  const minDeposit = isReseller ? 10000 : 5000; // 10k untuk reseller, 5k untuk user biasa
 
   let currentAmount = global.depositState[userId].amount || '';
 
